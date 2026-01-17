@@ -1,0 +1,73 @@
+[project]
+name = "tech_challenge_fase5"
+version = "0.0.1"
+description = "Tech challenge fase 5 FIAP"
+authors = [
+    {name = "Gabriel Henrique Pascon",email = "gh.pascon@gmail.com"}
+]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = "==3.11"
+packages = [{include = "fiap", from = "src"}]
+
+dependencies = [
+    
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+package-mode = false
+
+[tool.poetry.group.dev.dependencies]
+tomli = "^2.2.1"
+ruff = "^0.8.0"
+pyinstaller = "^6.10.0"
+pytest = "^7.4.0"
+
+
+[tool.ruff]
+# Configuração geral
+line-length = 100
+target-version = "py311"
+extend-include = ["*.pyi"]
+
+lint.ignore = [
+    "E203",    # compatível com formatter (slice spacing)
+    "E501",    # line too long (handled by formatter)
+    "S101",    # use of assert (comum em testes)
+    "S104",    # hardcoded bind all interfaces (comum em desenvolvimento)
+    "S105",    # hardcoded password string (pode ser muito restritivo)
+    "S106",    # hardcoded password argument (pode ser muito restritivo)
+    "S107",    # hardcoded password default (pode ser muito restritivo)
+    "TRY003",  # avoid specifying long messages outside exception class
+    "PLR0913", # too many arguments
+    "PLR0912", # too many branches
+    "PLR0915", # too many statements
+    "PLR2004", # magic value used in comparison
+]
+
+# Configurações por arquivo (equivalente ao per-file-ignores do flake8)
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]  # unused imports
+"**/migrations/**" = ["ALL"]  # ignorar regras em migrações
+"tests/**" = ["S101", "PLR2004"]  # permitir asserts e magic numbers em testes
+
+[tool.ruff.format]
+# Configuração do formatter (equivalente ao Black)
+quote-style = "single"
+indent-style = "tab"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+docstring-code-format = true
+
+[tool.ruff.lint.isort]
+# Configuração do import sorting (equivalente ao isort)
+combine-as-imports = true
+force-single-line = false
+force-wrap-aliases = true
+split-on-trailing-comma = true
+
