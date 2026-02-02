@@ -1,6 +1,6 @@
 [project]
 name = "tech_challenge_fase5"
-version = "0.0.1"
+version = "0.0.2"
 description = "Tech challenge fase 5 FIAP"
 authors = [
     {name = "Gabriel Henrique Pascon",email = "gh.pascon@gmail.com"}
