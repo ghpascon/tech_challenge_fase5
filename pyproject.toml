@@ -1,6 +1,6 @@
 [project]
 name = "tech_challenge_fase5"
-version = "0.0.2"
+version = "0.1.0"
 description = "Tech challenge fase 5 FIAP"
 authors = [
     {name = "Gabriel Henrique Pascon",email = "gh.pascon@gmail.com"}
@@ -30,6 +30,14 @@ pytest = "^7.4.0"
 
 
 [tool.ruff]
+exclude = [
+    ".venv",
+    "__pycache__",
+    "build",
+    "dist",
+    "generated/",
+    "references/"
+]
 # Configuração geral
 line-length = 100
 target-version = "py311"
