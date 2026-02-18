@@ -1,0 +1,7 @@
+{
+  "TITLE": "FIAP Tech Challenge - Fase 5",
+  "LOG_PATH": "C:/Users/DELL/Desktop/Logs",
+  "_DATABASE_URL": "sqlite:///C:\\Users\\DELL\\Desktop\\instance\\fiap.db",
+  "DATABASE_URL": null,
+  "PORT": 5000
+}
