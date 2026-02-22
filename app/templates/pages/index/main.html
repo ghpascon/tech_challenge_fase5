@@ -1,1 +1,917 @@
-{% extends "base.html" %} {% block content %} {% endblock %}
+{% extends "base.html" %} {% block content %}
+
+<div
+  class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 mt-16"
+  x-data="predictForm()"
+>
+  <!-- Page title -->
+  <div class="mb-8 text-center">
+    <h2 class="text-3xl font-extrabold text-gray-900">
+      Previsão de Desempenho
+    </h2>
+    <p class="mt-2 text-gray-500 text-sm">
+      Preencha os dados do estudante abaixo e clique em
+      <strong>Prever</strong> para obter a estimativa do modelo.
+    </p>
+  </div>
+
+  <!-- Form card -->
+  <form
+    @submit.prevent="submit()"
+    class="bg-white rounded-2xl shadow-lg border border-gray-200 p-8 space-y-8"
+  >
+    <!-- Section: Indicadores numéricos -->
+    <div>
+      <h3
+        class="text-base font-semibold text-gray-700 mb-4 uppercase tracking-wide border-b pb-2"
+      >
+        Indicadores Acadêmicos
+      </h3>
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+        <!-- fase -->
+        <div class="flex flex-col gap-1">
+          <label class="text-xs font-medium text-gray-600"
+            >Fase <span class="text-red-500">*</span></label
+          >
+          <input
+            type="number"
+            step="any"
+            x-model.number="form.fase"
+            placeholder="ex: 3"
+            class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            required
+          />
+        </div>
+
+        <!-- idade -->
+        <div class="flex flex-col gap-1">
+          <label class="text-xs font-medium text-gray-600"
+            >Idade <span class="text-red-500">*</span></label
+          >
+          <input
+            type="number"
+            step="any"
+            min="0"
+            x-model.number="form.idade"
+            placeholder="ex: 14"
+            class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            required
+          />
+        </div>
+
+        <!-- iaa -->
+        <div class="flex flex-col gap-1">
+          <label
+            class="flex items-center gap-1 text-xs font-medium text-gray-600"
+          >
+            IAA <span class="text-red-500">*</span>
+            <span class="relative group cursor-help">
+              <span
+                class="inline-flex items-center justify-center w-4 h-4 rounded-full bg-gray-200 text-gray-500 text-[10px] font-bold"
+                >?</span
+              >
+              <span
+                class="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 w-56 bg-gray-800 text-white text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity z-10 pointer-events-none text-center"
+                >Indicador de Auto Avaliação – Média das Notas de Auto Avaliação
+                do Aluno</span
+              >
+            </span>
+          </label>
+          <input
+            type="number"
+            step="any"
+            min="0"
+            max="10"
+            x-model.number="form.iaa"
+            placeholder="ex: 7.5"
+            class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            required
+          />
+        </div>
+
+        <!-- ieg -->
+        <div class="flex flex-col gap-1">
+          <label
+            class="flex items-center gap-1 text-xs font-medium text-gray-600"
+          >
+            IEG <span class="text-red-500">*</span>
+            <span class="relative group cursor-help">
+              <span
+                class="inline-flex items-center justify-center w-4 h-4 rounded-full bg-gray-200 text-gray-500 text-[10px] font-bold"
+                >?</span
+              >
+              <span
+                class="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 w-56 bg-gray-800 text-white text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity z-10 pointer-events-none text-center"
+                >Indicador de Engajamento – Média das Notas de Engajamento do
+                Aluno</span
+              >
+            </span>
+          </label>
+          <input
+            type="number"
+            step="any"
+            min="0"
+            max="10"
+            x-model.number="form.ieg"
+            placeholder="ex: 8.0"
+            class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            required
+          />
+        </div>
+
+        <!-- ips -->
+        <div class="flex flex-col gap-1">
+          <label
+            class="flex items-center gap-1 text-xs font-medium text-gray-600"
+          >
+            IPS <span class="text-red-500">*</span>
+            <span class="relative group cursor-help">
+              <span
+                class="inline-flex items-center justify-center w-4 h-4 rounded-full bg-gray-200 text-gray-500 text-[10px] font-bold"
+                >?</span
+              >
+              <span
+                class="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 w-56 bg-gray-800 text-white text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity z-10 pointer-events-none text-center"
+                >Indicador Psicossocial – Média das Notas Psicossociais do
+                Aluno</span
+              >
+            </span>
+          </label>
+          <input
+            type="number"
+            step="any"
+            min="0"
+            max="10"
+            x-model.number="form.ips"
+            placeholder="ex: 6.0"
+            class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            required
+          />
+        </div>
+
+        <!-- ipp -->
+        <div class="flex flex-col gap-1">
+          <label
+            class="flex items-center gap-1 text-xs font-medium text-gray-600"
+          >
+            IPP <span class="text-red-500">*</span>
+            <span class="relative group cursor-help">
+              <span
+                class="inline-flex items-center justify-center w-4 h-4 rounded-full bg-gray-200 text-gray-500 text-[10px] font-bold"
+                >?</span
+              >
+              <span
+                class="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 w-56 bg-gray-800 text-white text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity z-10 pointer-events-none text-center"
+                >Indicador Psicopedagógico – Média das Notas Psicopedagógicas do
+                Aluno</span
+              >
+            </span>
+          </label>
+          <input
+            type="number"
+            step="any"
+            min="0"
+            max="10"
+            x-model.number="form.ipp"
+            placeholder="ex: 7.0"
+            class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            required
+          />
+        </div>
+
+        <!-- ida -->
+        <div class="flex flex-col gap-1">
+          <label
+            class="flex items-center gap-1 text-xs font-medium text-gray-600"
+          >
+            IDA <span class="text-red-500">*</span>
+            <span class="relative group cursor-help">
+              <span
+                class="inline-flex items-center justify-center w-4 h-4 rounded-full bg-gray-200 text-gray-500 text-[10px] font-bold"
+                >?</span
+              >
+              <span
+                class="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 w-56 bg-gray-800 text-white text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity z-10 pointer-events-none text-center"
+                >Indicador de Aprendizagem – Média das Notas do Indicador de
+                Aprendizagem</span
+              >
+            </span>
+          </label>
+          <input
+            type="number"
+            step="any"
+            min="0"
+            max="10"
+            x-model.number="form.ida"
+            placeholder="ex: 8.5"
+            class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            required
+          />
+        </div>
+
+        <!-- mat -->
+        <div class="flex flex-col gap-1">
+          <label
+            class="flex items-center gap-1 text-xs font-medium text-gray-600"
+          >
+            Matemática <span class="text-red-500">*</span>
+            <span class="relative group cursor-help">
+              <span
+                class="inline-flex items-center justify-center w-4 h-4 rounded-full bg-gray-200 text-gray-500 text-[10px] font-bold"
+                >?</span
+              >
+              <span
+                class="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 w-56 bg-gray-800 text-white text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity z-10 pointer-events-none text-center"
+                >Nota de Matemática (0–10)</span
+              >
+            </span>
+          </label>
+          <input
+            type="number"
+            step="any"
+            min="0"
+            max="10"
+            x-model.number="form.mat"
+            placeholder="ex: 7.0"
+            class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            required
+          />
+        </div>
+
+        <!-- por -->
+        <div class="flex flex-col gap-1">
+          <label
+            class="flex items-center gap-1 text-xs font-medium text-gray-600"
+          >
+            Português <span class="text-red-500">*</span>
+            <span class="relative group cursor-help">
+              <span
+                class="inline-flex items-center justify-center w-4 h-4 rounded-full bg-gray-200 text-gray-500 text-[10px] font-bold"
+                >?</span
+              >
+              <span
+                class="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 w-56 bg-gray-800 text-white text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity z-10 pointer-events-none text-center"
+                >Nota de Português (0–10)</span
+              >
+            </span>
+          </label>
+          <input
+            type="number"
+            step="any"
+            min="0"
+            max="10"
+            x-model.number="form.por"
+            placeholder="ex: 7.5"
+            class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            required
+          />
+        </div>
+
+        <!-- ipv -->
+        <div class="flex flex-col gap-1">
+          <label
+            class="flex items-center gap-1 text-xs font-medium text-gray-600"
+          >
+            IPV <span class="text-red-500">*</span>
+            <span class="relative group cursor-help">
+              <span
+                class="inline-flex items-center justify-center w-4 h-4 rounded-full bg-gray-200 text-gray-500 text-[10px] font-bold"
+                >?</span
+              >
+              <span
+                class="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 w-56 bg-gray-800 text-white text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity z-10 pointer-events-none text-center"
+                >Indicador de Ponto de Virada – Média das Notas de Ponto de
+                Virada do Aluno</span
+              >
+            </span>
+          </label>
+          <input
+            type="number"
+            step="any"
+            min="0"
+            max="10"
+            x-model.number="form.ipv"
+            placeholder="ex: 5.0"
+            class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            required
+          />
+        </div>
+
+        <!-- ian -->
+        <div class="flex flex-col gap-1">
+          <label
+            class="flex items-center gap-1 text-xs font-medium text-gray-600"
+          >
+            IAN <span class="text-red-500">*</span>
+            <span class="relative group cursor-help">
+              <span
+                class="inline-flex items-center justify-center w-4 h-4 rounded-full bg-gray-200 text-gray-500 text-[10px] font-bold"
+                >?</span
+              >
+              <span
+                class="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 w-56 bg-gray-800 text-white text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity z-10 pointer-events-none text-center"
+                >Indicador de Adequação ao Nível – Média das Notas de Adequação
+                do Aluno ao nível atual</span
+              >
+            </span>
+          </label>
+          <input
+            type="number"
+            step="any"
+            min="0"
+            max="10"
+            x-model.number="form.ian"
+            placeholder="ex: 6.5"
+            class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            required
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Section: Dados Pessoais -->
+    <div>
+      <h3
+        class="text-base font-semibold text-gray-700 mb-4 uppercase tracking-wide border-b pb-2"
+      >
+        Dados Pessoais
+      </h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <!-- genero -->
+        <div class="flex flex-col gap-1">
+          <label class="text-xs font-medium text-gray-600"
+            >Gênero <span class="text-red-500">*</span></label
+          >
+          <select
+            x-model="form.genero"
+            class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white"
+            required
+          >
+            <option value="" disabled>Selecione…</option>
+            <option value="f">Feminino</option>
+            <option value="m">Masculino</option>
+          </select>
+        </div>
+
+        <!-- instituicao_tipo -->
+        <div class="flex flex-col gap-1">
+          <label class="text-xs font-medium text-gray-600"
+            >Tipo de Instituição <span class="text-red-500">*</span></label
+          >
+          <select
+            x-model.number="form.instituicao_tipo"
+            class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white"
+            required
+          >
+            <option value="" disabled>Selecione…</option>
+            <option value="1">1 – Pública</option>
+            <option value="2">2 – Privada (Programa de Apadrinhamento)</option>
+            <option value="3">3 – Privada</option>
+            <option value="4">4 – Privada (Parcerias com Bolsa 100%)</option>
+            <option value="5">5 – Bolsista Universitário – Formado(a)</option>
+            <option value="6">
+              6 – Privada (Pagamento por Empresa Parceira)
+            </option>
+            <option value="7">7 – Concluiu o 3º Ano em</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Submit -->
+    <div class="flex flex-wrap items-center justify-between gap-3">
+      <!-- Example buttons -->
+      <div class="flex gap-2">
+        <button
+          type="button"
+          @click="fillGood()"
+          class="inline-flex items-center gap-1 border border-emerald-400 text-emerald-700 hover:bg-emerald-50 text-xs font-medium px-4 py-2 rounded-lg transition"
+        >
+          <svg
+            class="w-3.5 h-3.5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M5 13l4 4L19 7"
+            />
+          </svg>
+          Exemplo bom
+        </button>
+        <button
+          type="button"
+          @click="fillBad()"
+          class="inline-flex items-center gap-1 border border-red-400 text-red-600 hover:bg-red-50 text-xs font-medium px-4 py-2 rounded-lg transition"
+        >
+          <svg
+            class="w-3.5 h-3.5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+          Exemplo ruim
+        </button>
+      </div>
+
+      <!-- Predict -->
+      <button
+        type="submit"
+        :disabled="loading"
+        class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 text-white font-semibold px-8 py-3 rounded-xl shadow transition"
+      >
+        <svg
+          x-show="loading"
+          class="animate-spin h-4 w-4 text-white"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <circle
+            class="opacity-25"
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            stroke-width="4"
+          ></circle>
+          <path
+            class="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8v8H4z"
+          ></path>
+        </svg>
+        <span x-text="loading ? 'Processando…' : 'Prever'"></span>
+      </button>
+    </div>
+  </form>
+
+  <!-- Result Modal -->
+  <div
+    x-show="showModal"
+    x-transition:enter="transition ease-out duration-200"
+    x-transition:enter-start="opacity-0"
+    x-transition:enter-end="opacity-100"
+    x-transition:leave="transition ease-in duration-150"
+    x-transition:leave-start="opacity-100"
+    x-transition:leave-end="opacity-0"
+    class="fixed inset-0 z-50 flex items-center justify-center p-4"
+    style="display: none"
+  >
+    <!-- Backdrop -->
+    <div
+      class="absolute inset-0 bg-black/50 backdrop-blur-sm"
+      @click="showModal = false"
+    ></div>
+
+    <!-- Panel -->
+    <div
+      x-show="showModal"
+      x-transition:enter="transition ease-out duration-200"
+      x-transition:enter-start="opacity-0 scale-95"
+      x-transition:enter-end="opacity-100 scale-100"
+      x-transition:leave="transition ease-in duration-150"
+      x-transition:leave-start="opacity-100 scale-100"
+      x-transition:leave-end="opacity-0 scale-95"
+      class="relative bg-white rounded-2xl shadow-2xl w-full max-w-sm p-8 z-10"
+    >
+      <!-- Close -->
+      <button
+        @click="showModal = false"
+        class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition"
+      >
+        <svg
+          class="w-5 h-5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+      </button>
+
+      <!-- Error -->
+      <template x-if="error">
+        <div class="flex flex-col items-center text-center gap-4">
+          <div
+            class="w-16 h-16 rounded-full bg-red-500 flex items-center justify-center shadow-lg"
+          >
+            <svg
+              class="h-8 w-8 text-white"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </div>
+          <p class="font-semibold text-red-700 text-lg">Erro na predição</p>
+          <p class="text-sm text-red-600" x-text="error"></p>
+          <button
+            @click="showModal = false"
+            class="mt-2 px-6 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-semibold rounded-xl transition"
+          >
+            Fechar
+          </button>
+        </div>
+      </template>
+
+      <!-- Success -->
+      <template x-if="result !== null && !error">
+        <div class="flex flex-col items-center text-center gap-4">
+          <!-- NEGATIVO LEVE (-0.5 a 0) -->
+          <div x-show="result < 0 && result > -0.5" class="contents">
+            <div
+              class="w-16 h-16 rounded-full bg-amber-400 flex items-center justify-center shadow-lg"
+            >
+              <svg
+                class="h-8 w-8 text-white"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"
+                />
+              </svg>
+            </div>
+            <p class="text-amber-700 font-semibold text-lg">Atenção</p>
+            <div
+              class="bg-amber-50 border border-amber-200 rounded-xl px-10 py-6 w-full shadow-inner"
+            >
+              <p class="text-xs text-gray-400 uppercase tracking-widest mb-1">
+                Resultado
+              </p>
+              <p
+                class="text-5xl font-extrabold text-amber-500"
+                x-text="result.toFixed(4)"
+              ></p>
+              <span
+                class="mt-2 inline-block bg-amber-100 text-amber-700 text-xs font-semibold px-3 py-1 rounded-full"
+                >Nível Leve Negativo</span
+              >
+            </div>
+            <p class="text-xs text-gray-400">
+              O modelo retornou um valor levemente negativo.
+            </p>
+            <button
+              @click="showModal = false"
+              class="mt-2 px-6 py-2 bg-amber-500 hover:bg-amber-600 text-white text-sm font-semibold rounded-xl transition"
+            >
+              Fechar
+            </button>
+          </div>
+
+          <!-- NEGATIVO MÉDIO (-1 a -0.5) -->
+          <div x-show="result <= -0.5 && result > -1" class="contents">
+            <div
+              class="w-16 h-16 rounded-full bg-orange-500 flex items-center justify-center shadow-lg"
+            >
+              <svg
+                class="h-8 w-8 text-white"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"
+                />
+              </svg>
+            </div>
+            <p class="text-orange-700 font-semibold text-lg">Atenção</p>
+            <div
+              class="bg-orange-50 border border-orange-200 rounded-xl px-10 py-6 w-full shadow-inner"
+            >
+              <p class="text-xs text-gray-400 uppercase tracking-widest mb-1">
+                Resultado
+              </p>
+              <p
+                class="text-5xl font-extrabold text-orange-500"
+                x-text="result.toFixed(4)"
+              ></p>
+              <span
+                class="mt-2 inline-block bg-orange-100 text-orange-700 text-xs font-semibold px-3 py-1 rounded-full"
+                >Nível Médio Negativo</span
+              >
+            </div>
+            <p class="text-xs text-gray-400">
+              O modelo retornou um valor moderadamente negativo.
+            </p>
+            <button
+              @click="showModal = false"
+              class="mt-2 px-6 py-2 bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold rounded-xl transition"
+            >
+              Fechar
+            </button>
+          </div>
+
+          <!-- NEGATIVO ALTO (< -1) -->
+          <div x-show="result <= -1" class="contents">
+            <div
+              class="w-16 h-16 rounded-full bg-red-600 flex items-center justify-center shadow-lg"
+            >
+              <svg
+                class="h-8 w-8 text-white"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"
+                />
+              </svg>
+            </div>
+            <p class="text-red-700 font-semibold text-lg">Alerta</p>
+            <div
+              class="bg-red-50 border border-red-200 rounded-xl px-10 py-6 w-full shadow-inner"
+            >
+              <p class="text-xs text-gray-400 uppercase tracking-widest mb-1">
+                Resultado
+              </p>
+              <p
+                class="text-5xl font-extrabold text-red-600"
+                x-text="result.toFixed(4)"
+              ></p>
+              <span
+                class="mt-2 inline-block bg-red-100 text-red-700 text-xs font-semibold px-3 py-1 rounded-full"
+                >Nível Alto Negativo</span
+              >
+            </div>
+            <p class="text-xs text-gray-400">
+              O modelo retornou um valor altamente negativo.
+            </p>
+            <button
+              @click="showModal = false"
+              class="mt-2 px-6 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-semibold rounded-xl transition"
+            >
+              Fechar
+            </button>
+          </div>
+
+          <!-- LEVE (0 a 0.5) -->
+          <div x-show="result >= 0 && result <= 0.5" class="contents">
+            <div
+              class="w-16 h-16 rounded-full bg-teal-400 flex items-center justify-center shadow-lg"
+            >
+              <svg
+                class="h-8 w-8 text-white"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+            </div>
+            <p class="text-teal-700 font-semibold text-lg">
+              Predição concluída
+            </p>
+            <div
+              class="bg-teal-50 border border-teal-200 rounded-xl px-10 py-6 w-full shadow-inner"
+            >
+              <p class="text-xs text-gray-400 uppercase tracking-widest mb-1">
+                Resultado
+              </p>
+              <p
+                class="text-5xl font-extrabold text-teal-600"
+                x-text="result.toFixed(4)"
+              ></p>
+              <span
+                class="mt-2 inline-block bg-teal-100 text-teal-700 text-xs font-semibold px-3 py-1 rounded-full"
+                >Nível Leve</span
+              >
+            </div>
+            <p class="text-xs text-gray-400">
+              Valor estimado pelo RandomForestRegressor
+            </p>
+            <button
+              @click="showModal = false"
+              class="mt-2 px-6 py-2 bg-teal-600 hover:bg-teal-700 text-white text-sm font-semibold rounded-xl transition"
+            >
+              Fechar
+            </button>
+          </div>
+
+          <!-- MÉDIO (0.5 a 1) -->
+          <div x-show="result > 0.5 && result <= 1" class="contents">
+            <div
+              class="w-16 h-16 rounded-full bg-green-500 flex items-center justify-center shadow-lg"
+            >
+              <svg
+                class="h-8 w-8 text-white"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+            </div>
+            <p class="text-green-700 font-semibold text-lg">
+              Predição concluída
+            </p>
+            <div
+              class="bg-green-50 border border-green-200 rounded-xl px-10 py-6 w-full shadow-inner"
+            >
+              <p class="text-xs text-gray-400 uppercase tracking-widest mb-1">
+                Resultado
+              </p>
+              <p
+                class="text-5xl font-extrabold text-green-600"
+                x-text="result.toFixed(4)"
+              ></p>
+              <span
+                class="mt-2 inline-block bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full"
+                >Nível Médio</span
+              >
+            </div>
+            <p class="text-xs text-gray-400">
+              Valor estimado pelo RandomForestRegressor
+            </p>
+            <button
+              @click="showModal = false"
+              class="mt-2 px-6 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-semibold rounded-xl transition"
+            >
+              Fechar
+            </button>
+          </div>
+
+          <!-- ALTO (> 1) -->
+          <div x-show="result > 1" class="contents">
+            <div
+              class="w-16 h-16 rounded-full bg-emerald-500 flex items-center justify-center shadow-lg"
+            >
+              <svg
+                class="h-8 w-8 text-white"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+            </div>
+            <p class="text-emerald-700 font-semibold text-lg">
+              Predição concluída
+            </p>
+            <div
+              class="bg-emerald-50 border border-emerald-200 rounded-xl px-10 py-6 w-full shadow-inner"
+            >
+              <p class="text-xs text-gray-400 uppercase tracking-widest mb-1">
+                Resultado
+              </p>
+              <p
+                class="text-5xl font-extrabold text-emerald-600"
+                x-text="result.toFixed(4)"
+              ></p>
+              <span
+                class="mt-2 inline-block bg-emerald-100 text-emerald-700 text-xs font-semibold px-3 py-1 rounded-full"
+                >Nível Alto</span
+              >
+            </div>
+            <p class="text-xs text-gray-400">
+              Valor estimado pelo RandomForestRegressor
+            </p>
+            <button
+              @click="showModal = false"
+              class="mt-2 px-6 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold rounded-xl transition"
+            >
+              Fechar
+            </button>
+          </div>
+        </div>
+      </template>
+    </div>
+  </div>
+</div>
+
+<script>
+  function predictForm() {
+    return {
+      loading: false,
+      result: null,
+      error: null,
+      showModal: false,
+
+      form: {
+        fase: "",
+        idade: "",
+        iaa: "",
+        ieg: "",
+        ips: "",
+        ipp: "",
+        ida: "",
+        mat: "",
+        por: "",
+        ipv: "",
+        ian: "",
+        genero: "",
+        instituicao_tipo: "",
+      },
+
+      fillGood() {
+        this.form = {
+          fase: 7,
+          idade: 16,
+          iaa: 9.0,
+          ieg: 8.5,
+          ips: 10.0,
+          ipp: 8.5,
+          ida: 9.0,
+          mat: 8.5,
+          por: 9.0,
+          ipv: 9.0,
+          ian: 9.0,
+          genero: "m",
+          instituicao_tipo: 3,
+        };
+      },
+
+      fillBad() {
+        this.form = {
+          fase: 1,
+          idade: 19,
+          iaa: 2.5,
+          ieg: 1.5,
+          ips: 2.0,
+          ipp: 1.5,
+          ida: 2.0,
+          mat: 2.0,
+          por: 1.5,
+          ipv: 1.0,
+          ian: 1.5,
+          genero: "m",
+          instituicao_tipo: 1,
+        };
+      },
+
+      async submit() {
+        this.loading = true;
+        this.result = null;
+        this.error = null;
+
+        try {
+          const response = await fetch("/api/v1/ml/predict", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(this.form),
+          });
+
+          const data = await response.json();
+
+          if (!response.ok || data.error) {
+            this.error = data.error || `HTTP ${response.status}`;
+          } else {
+            this.result = data.prediction;
+          }
+        } catch (err) {
+          this.error = "Falha na comunicação com o servidor: " + err.message;
+        } finally {
+          this.loading = false;
+          this.showModal = true;
+        }
+      },
+    };
+  }
+</script>
+
+{% endblock %}

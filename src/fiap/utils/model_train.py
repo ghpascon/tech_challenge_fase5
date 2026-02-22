@@ -101,7 +101,7 @@ def treinar_modelos(
 				melhor_modelo_geral = melhor_modelo
 				melhor_nome_geral = nome
 
-				joblib.dump(melhor_modelo_geral, model_path / 'best_model.pkl')
+				joblib.dump(melhor_modelo_geral, model_path / 'best_model.joblib')
 
 				logging.info(
 					f'Novo melhor modelo salvo: '
@@ -118,6 +118,6 @@ def treinar_modelos(
 	logging.info('===== RESULTADOS FINAIS =====')
 	logging.info(df_resultados.to_string())
 	logging.info(f'Modelo final selecionado: {melhor_nome_geral}')
-	logging.info(f"Modelo salvo em: {model_path / 'best_model.pkl'}")
+	logging.info(f"Modelo salvo em: {model_path / 'best_model.joblib'}")
 
 	return df_resultados, melhor_modelo_geral
