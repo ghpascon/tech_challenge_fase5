@@ -76,7 +76,7 @@ class MlManager:
 			'mat': data.mat,
 			'por': data.por,
 			'ipv': data.ipv,
-			'ian': data.ian,
+			#'ian': data.ian,
 		}
 
 		# one-hot: genero

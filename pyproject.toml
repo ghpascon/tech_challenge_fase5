@@ -21,12 +21,14 @@ prometheus-fastapi-instrumentator = ">=7.1.0,<8.0.0"
 fastapi = "==0.110.0"
 uvicorn = "==0.29.0"
 pygame = "^2.6.1"
+xgboost = "^3.2.0"
 
 [tool.poetry.group.dev.dependencies]
 tomli = "^2.2.1"
 ruff = "^0.8.0"
 pyinstaller = "^6.10.0"
 pytest = "^7.4.0"
+ipykernel = "^7.2.0"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
