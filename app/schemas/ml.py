@@ -43,12 +43,6 @@ class PredictSchema(BaseModel):
 		le=10,
 		description='Indicador de Ponto de Virada – Média das Notas de Ponto de Virada do Aluno',
 	)
-	ian: float = Field(
-		...,
-		ge=0,
-		le=10,
-		description='Indicador de Adequação ao Nível – Média das Notas de Adequação do Aluno ao nível atual',
-	)
 
 	genero: Literal['f', 'm'] = Field(..., description="Gender: 'f' or 'm'")
 

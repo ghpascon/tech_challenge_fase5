@@ -296,7 +296,6 @@
             required
           />
         </div>
-        
       </div>
     </div>
 
@@ -684,7 +683,15 @@
               >
             </div>
             <p class="text-xs text-gray-400">
-              Valor estimado pelo RandomForestRegressor
+              Valor estimado pelo modelo
+              <span
+                x-data="{ modelType: null }"
+                x-init="fetch('{{ url_for('get_model_info') }}').then(r => r.json()).then(d => modelType = d.model_type)"
+              >
+                <template x-if="modelType">
+                  <span class="ml-1 text-gray-500">({{ modelType }})</span>
+                </template>
+              </span>
             </p>
             <button
               @click="showModal = false"
@@ -732,7 +739,15 @@
               >
             </div>
             <p class="text-xs text-gray-400">
-              Valor estimado pelo RandomForestRegressor
+              Valor estimado pelo modelo
+              <span
+                x-data="{ modelType: null }"
+                x-init="fetch('{{ url_for('get_model_info') }}').then(r => r.json()).then(d => modelType = d.model_type)"
+              >
+                <template x-if="modelType">
+                  <span class="ml-1 text-gray-500">({{ modelType }})</span>
+                </template>
+              </span>
             </p>
             <button
               @click="showModal = false"
@@ -814,7 +829,6 @@
         mat: "",
         por: "",
         ipv: "",
-        ian: "",
         genero: "",
         instituicao_tipo: "",
       },
@@ -831,7 +845,6 @@
           mat: 8.5,
           por: 9.0,
           ipv: 9.0,
-          ian: 9.0,
           genero: "m",
           instituicao_tipo: 3,
         };
@@ -849,7 +862,6 @@
           mat: 2.0,
           por: 1.5,
           ipv: 1.0,
-          ian: 1.5,
           genero: "m",
           instituicao_tipo: 1,
         };
