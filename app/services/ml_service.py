@@ -3,6 +3,9 @@ import joblib
 import logging
 import json
 import pandas as pd
+from app.models.ml import Predict
+from app.db import DatabaseManager
+from app.core import settings
 
 
 class MlManager:
@@ -40,6 +43,13 @@ class MlManager:
 			logging.error(f'Error loading institutions data: {e}')
 			self.institutions_data = None
 
+		# instance Database
+		logging.info('Initializing DatabaseManager for MlManager')
+		self.db = DatabaseManager(settings.DATABASE_URL)
+		self.db.initialize()
+		self.db.register_models(Predict)
+		self.db.create_tables()
+
 	def _load_model(self, ml_path: str, ml_model: str):
 		model_path = Path(ml_path) / ml_model
 		if not model_path.exists():
@@ -76,7 +86,6 @@ class MlManager:
 			'mat': data.mat,
 			'por': data.por,
 			'ipv': data.ipv,
-			#'ian': data.ian,
 		}
 
 		# one-hot: genero
@@ -94,4 +103,31 @@ class MlManager:
 		df_scaled = self.scaler.transform(df)
 		prediction = self.model.predict(df_scaled)
 
+		try:
+			self.save_prediction(data, float(prediction[0]))
+		except Exception as e:
+			logging.error(f'Error saving prediction: {e}')
+
 		return float(prediction[0])
+
+	def save_prediction(self, data, prediction: float) -> Predict:
+		"""Save the input data and prediction result to the database."""
+		logging.info(f'Saving prediction to database: data={data}, prediction={prediction}')
+		predict_record = Predict(
+			fase=data.fase,
+			idade=data.idade,
+			iaa=data.iaa,
+			ieg=data.ieg,
+			ips=data.ips,
+			ipp=data.ipp,
+			ida=data.ida,
+			mat=data.mat,
+			por=data.por,
+			ipv=data.ipv,
+			genero=data.genero,
+			instituicao_tipo=data.instituicao_tipo,
+			predict=prediction,
+		)
+		with self.db.get_session() as session:
+			session.add(predict_record)
+		return predict_record

@@ -1,7 +1,6 @@
 {
   "TITLE": "FIAP Tech Challenge - Fase 5",
-  "LOG_PATH": "C:\Users\marci\Documents\programas\pos-ML\tc5\logs",
-  "_DATABASE_URL": "sqlite:///C:\\Users\\DELL\\Desktop\\instance\\fiap.db",
-  "DATABASE_URL": null,
+  "LOG_PATH": "Logs",
+  "DATABASE_URL": "sqlite:///instance/fiap.db",
   "PORT": 5000
 }

@@ -9,16 +9,24 @@ O pipeline cobre desde o pré-processamento dos dados brutos até a exposição 
 
 - [Tech Challenge Fase 5 — Previsão de Defasagem Escolar](#tech-challenge-fase-5--previsão-de-defasagem-escolar)
   - [Sumário](#sumário)
-  - [Visão Geral](#visão-geral)
   - [Estrutura do Projeto](#estrutura-do-projeto)
+  Projeto desenvolvido para a **Associação Passos Mágicos** por alunos da FIAP — Engenharia de Machine Learning, com objetivo de apoiar decisões educacionais através da previsão do grau de defasagem escolar de alunos, utilizando indicadores educacionais anonimizados.  
   - [Pré-requisitos](#pré-requisitos)
   - [Instalação com Poetry](#instalação-com-poetry)
-  - [Configuração](#configuração)
   - [Executando a Aplicação](#executando-a-aplicação)
+  ## Visão Comercial
+
+  Este sistema foi desenhado para apoiar gestores educacionais da Associação Passos Mágicos, permitindo:
+
+  - Predição automatizada do grau de defasagem escolar de cada aluno, com base em indicadores acadêmicos e psicossociais.
+  - Registro de cada predição realizada em banco de dados, possibilitando análises históricas, detecção de mudanças no perfil dos alunos (data drifting) e monitoramento da saúde do modelo.
+  - Interface web intuitiva para uso por equipes pedagógicas, com visualização clara dos resultados e faixas de atenção.
+  - Possibilidade de integração com dashboards e relatórios institucionais.
+
+  ---
   - [Notebooks](#notebooks)
     - [`notebooks/1_data_processing.ipynb` — Processamento de Dados](#notebooks1_data_processingipynb--processamento-de-dados)
     - [`notebooks/2_model_train.ipynb` — Treinamento do Modelo](#notebooks2_model_trainipynb--treinamento-do-modelo)
-  - [MLflow — Rastreamento de Experimentos](#mlflow--rastreamento-de-experimentos)
   - [API REST](#api-rest)
     - [`GET /api/v1/ml/get_model_info`](#get-apiv1mlget_model_info)
     - [`POST /api/v1/ml/predict`](#post-apiv1mlpredict)
@@ -29,11 +37,9 @@ O pipeline cobre desde o pré-processamento dos dados brutos até a exposição 
   - [Testes](#testes)
 
 ---
-
 ## Visão Geral
 
 | Etapa | Descrição |
-|---|---|
 | Processamento de dados | Limpeza, encoding e normalização dos CSVs brutos |
 | Treinamento | Comparação de modelos com GridSearchCV + validação cruzada |
 | Rastreamento | MLflow para log de parâmetros, métricas e artefatos |
@@ -121,33 +127,19 @@ Edite `config/config.json` conforme necessário:
 
 ---
 
-## Executando a Aplicação
 
 ```bash
 poetry run python main.py
 ```
-
-A aplicação sobe em `http://localhost:5000` e, se configurado, abre o navegador automaticamente.
-
-| URL | Descrição |
 |---|---|
-| `http://localhost:5000/` | Interface web de predição |
 | `http://localhost:5000/docs` | Swagger UI interativo |
 | `http://localhost:5000/logs` | Visualizador de logs da aplicação |
 | `http://localhost:5000/metrics` | Métricas Prometheus |
-
----
-
 ## Notebooks
-
 > ⚠️ **Atenção:** Ao abrir um notebook no VS Code, selecione o kernel do Poetry como interpretador Python.  
 > No VS Code: clique no seletor de kernel (canto superior direito do notebook) → **Select Another Kernel** → **Python Environments** → escolha o ambiente `.venv` criado pelo Poetry (geralmente em `C:\Users\<user>\AppData\Local\pypoetry\Cache\...` ou dentro da pasta do projeto se `virtualenvs.in-project = true`).
 
-### `notebooks/1_data_processing.ipynb` — Processamento de Dados
 
-Responsável por transformar os CSVs brutos em um dataset limpo e pronto para modelagem.
-
-**Etapas principais:**
 
 1. **Carregamento** dos dados `PEDE2024.csv` com padronização de colunas.
 2. **Exploração inicial** — shape, tipos, nulos e estatísticas descritivas.
@@ -241,7 +233,6 @@ Realiza uma predição de defasagem escolar.
   "mat": 8.5,
   "por": 9.0,
   "ipv": 8.0,
-  "ian": 9.0,
   "genero": "f",
   "instituicao_tipo": 1
 }
@@ -258,7 +249,7 @@ Realiza uma predição de defasagem escolar.
 | Campo | Restrição |
 |---|---|
 | `idade` | `>= 0` |
-| `iaa`, `ieg`, `ips`, `ipp`, `ida`, `mat`, `por`, `ipv`, `ian` | `>= 0` e `<= 10` |
+| `iaa`, `ieg`, `ips`, `ipp`, `ida`, `mat`, `por`, `ipv` | `>= 0` e `<= 10` |
 | `genero` | `"f"` ou `"m"` |
 | `instituicao_tipo` | inteiro entre `1` e `7` |
 
@@ -278,7 +269,7 @@ Retorna alertas ativos do sistema.
 
 A rota `/` exibe um formulário completo construído com **Tailwind CSS** e **Alpine.js**:
 
-- **Indicadores acadêmicos** (IAA, IEG, IPS, IPP, IDA, MAT, POR, IPV, IAN) com tooltips `?` explicativos e validação `min=0 / max=10` no navegador.
+- **Indicadores acadêmicos** (IAA, IEG, IPS, IPP, IDA, MAT, POR, IPV) com tooltips `?` explicativos e validação `min=0 / max=10` no navegador.
 - **Dados pessoais:** gênero e tipo de instituição de ensino (select com os 7 tipos mapeados).
 - **Botões de exemplo:** *Exemplo bom* e *Exemplo ruim* preenchem o formulário automaticamente para demonstração rápida.
 - **Modal de resultado** com classificação visual por nível:
