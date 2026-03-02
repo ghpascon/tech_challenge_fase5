@@ -4,7 +4,7 @@ from typing import Any, Callable, Dict
 
 from fastapi.templating import Jinja2Templates
 
-from fiap.utils.path import get_frozen_path
+from src.fiap.utils.path import get_frozen_path
 
 
 class TemplateManager:

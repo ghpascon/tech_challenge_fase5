@@ -22,7 +22,7 @@ from app.core import settings, SWAGGER_PATH
 # APP
 from app.core.build_app import create_application
 
-from fiap.utils.path import get_frozen_path
+from src.fiap.utils.path import get_frozen_path
 
 
 logging.info('Application starting...')

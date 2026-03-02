@@ -1,5 +1,5 @@
 import pandas as pd
-from fiap.utils.data_processing import remove_unused_columns, remove_null_columns, padronizar_fase
+from src.fiap.utils.data_processing import remove_unused_columns, remove_null_columns, padronizar_fase
 
 
 def test_remove_unused_columns():

@@ -2,7 +2,7 @@ from app import __version__
 
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
-from fiap.utils.path import get_prefix_from_path
+from src.fiap.utils.path import get_prefix_from_path
 from app.core import alerts_manager
 
 

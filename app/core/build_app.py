@@ -6,7 +6,7 @@ import asyncio
 import logging
 import os
 
-from fiap.utils.path import get_frozen_path, load_file, include_all_routers
+from src.fiap.utils.path import get_frozen_path, load_file, include_all_routers
 from app.async_func import create_async_tasks
 from .exeption_handlers import setup_exeptions
 from .middleware import setup_middlewares

@@ -1,7 +1,7 @@
 import logging
 import os
 import tempfile
-from fiap.utils.logger_manager import LoggerManager
+from src.fiap.utils.logger_manager import LoggerManager
 
 
 def test_logger_manager_creates_log_file():

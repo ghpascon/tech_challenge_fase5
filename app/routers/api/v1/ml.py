@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
-from fiap.utils.path import get_prefix_from_path
+from src.fiap.utils.path import get_prefix_from_path
 from app.services import ml_manager
 from app.schemas.ml import PredictSchema
 
@@ -8,10 +8,7 @@ router_prefix = get_prefix_from_path(__file__)
 router = APIRouter(prefix=router_prefix, tags=[router_prefix])
 
 
-@router.get(
-	'/get_model_info',
-	summary='Get information about the loaded ML model',
-)
+@router.get('/get_model_info', summary='Get information about the loaded ML model')
 async def get_model_info():
 	if ml_manager.model is None:
 		return JSONResponse(content={'error': 'No model loaded'}, status_code=500)
@@ -27,7 +24,6 @@ async def get_model_info():
 		'feature_names': features if features else None,
 		'institutions_data': institutions_data if institutions_data else None,
 	}
-
 	return JSONResponse(content=model_info)
 
 

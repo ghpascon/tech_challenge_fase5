@@ -1,4 +1,4 @@
-from fiap.db import DatabaseManager
+from src.fiap.db import DatabaseManager
 import logging
 from app.models import get_all_models
 

@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  api:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app  # Sincroniza a raiz do seu projeto com a raiz do container
+    environment:
+      - PYTHONUNBUFFERED=1
+      - DATABASE_URL=sqlite:////app/fiap.db

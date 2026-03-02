@@ -1,10 +1,10 @@
 from .config import Settings
-from fiap.utils.logger_manager import LoggerManager
+from src.fiap.utils.logger_manager import LoggerManager
 import os
 from .build_templates import TemplateManager
 from .indicator import Indicator
-from fiap.utils.path import get_frozen_path
-from fiap.utils.alerts import AlertsManager
+from src.fiap.utils.path import get_frozen_path
+from src.fiap.utils.alerts import AlertsManager
 
 # DEFAULT VARS
 FILES_PATH = get_frozen_path('config')

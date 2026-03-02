@@ -1,5 +1,5 @@
 import os
-from fiap.utils.path import get_frozen_path
+from src.fiap.utils.path import get_frozen_path
 import logging
 import warnings
 

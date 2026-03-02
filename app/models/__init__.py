@@ -15,7 +15,7 @@ except ImportError:
 	DeclarativeBase = declarative_base()
 
 # Import all model modules to ensure they're registered
-from fiap.models import Base, BaseMixin
+from src.fiap.models import Base, BaseMixin
 
 
 def get_all_models() -> List[Type]:

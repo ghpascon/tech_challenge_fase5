@@ -5,7 +5,7 @@ import logging
 import os
 import sys
 
-from fiap.utils.path import get_frozen_path
+from src.fiap.utils.path import get_frozen_path
 
 
 async def restartable_task(func, *args, **kwargs):

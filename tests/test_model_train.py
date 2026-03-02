@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from fiap.utils.model_train import log_extreme_examples, treinar_modelos
+from src.fiap.utils.model_train import log_extreme_examples, treinar_modelos
 from sklearn.linear_model import LinearRegression
 
 
