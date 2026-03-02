@@ -2,7 +2,7 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ "main" ] # Dispara o build sempre que você enviar para a main
+    branches: [ "main" ]
 
 jobs:
   build-and-push:
@@ -27,5 +27,4 @@ jobs:
         with:
           context: .
           push: true
-          # O nome da imagem será: ghcr.io/seu-usuario/nome-do-repo:latest
           tags: ghcr.io/${{ github.repository }}:latest
