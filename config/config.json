@@ -1,6 +1,6 @@
 {
   "TITLE": "FIAP Tech Challenge - Fase 5",
   "LOG_PATH": "Logs",
-  "DATABASE_URL": "sqlite:///instance/fiap.db",
+  "DATABASE_URL": "sqlite:///fiap.db",
   "PORT": 5000
 }
