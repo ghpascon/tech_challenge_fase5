@@ -9,24 +9,14 @@ O pipeline cobre desde o pré-processamento dos dados brutos até a exposição 
 
 - [Tech Challenge Fase 5 — Previsão de Defasagem Escolar](#tech-challenge-fase-5--previsão-de-defasagem-escolar)
   - [Sumário](#sumário)
+  - [Visão Geral](#visão-geral)
   - [Estrutura do Projeto](#estrutura-do-projeto)
-  Projeto desenvolvido para a **Associação Passos Mágicos** por alunos da FIAP — Engenharia de Machine Learning, com objetivo de apoiar decisões educacionais através da previsão do grau de defasagem escolar de alunos, utilizando indicadores educacionais anonimizados.  
   - [Pré-requisitos](#pré-requisitos)
   - [Instalação com Poetry](#instalação-com-poetry)
-  - [Executando a Aplicação](#executando-a-aplicação)
-  ## Visão Comercial
-
-  Este sistema foi desenhado para apoiar gestores educacionais da Associação Passos Mágicos, permitindo:
-
-  - Predição automatizada do grau de defasagem escolar de cada aluno, com base em indicadores acadêmicos e psicossociais.
-  - Registro de cada predição realizada em banco de dados, possibilitando análises históricas, detecção de mudanças no perfil dos alunos (data drifting) e monitoramento da saúde do modelo.
-  - Interface web intuitiva para uso por equipes pedagógicas, com visualização clara dos resultados e faixas de atenção.
-  - Possibilidade de integração com dashboards e relatórios institucionais.
-
-  ---
+  - [Configuração](#configuração)
   - [Notebooks](#notebooks)
-    - [`notebooks/1_data_processing.ipynb` — Processamento de Dados](#notebooks1_data_processingipynb--processamento-de-dados)
     - [`notebooks/2_model_train.ipynb` — Treinamento do Modelo](#notebooks2_model_trainipynb--treinamento-do-modelo)
+  - [MLflow — Rastreamento de Experimentos](#mlflow--rastreamento-de-experimentos)
   - [API REST](#api-rest)
     - [`GET /api/v1/ml/get_model_info`](#get-apiv1mlget_model_info)
     - [`POST /api/v1/ml/predict`](#post-apiv1mlpredict)
@@ -40,6 +30,7 @@ O pipeline cobre desde o pré-processamento dos dados brutos até a exposição 
 ## Visão Geral
 
 | Etapa | Descrição |
+|---|---|
 | Processamento de dados | Limpeza, encoding e normalização dos CSVs brutos |
 | Treinamento | Comparação de modelos com GridSearchCV + validação cruzada |
 | Rastreamento | MLflow para log de parâmetros, métricas e artefatos |
@@ -131,6 +122,8 @@ Edite `config/config.json` conforme necessário:
 ```bash
 poetry run python main.py
 ```
+
+| URL | Descrição |
 |---|---|
 | `http://localhost:5000/docs` | Swagger UI interativo |
 | `http://localhost:5000/logs` | Visualizador de logs da aplicação |
